@@ -1,0 +1,183 @@
+/*********************************************************************************************************************************
+                          Name  :A.Karthikeyan
+                          Rollno:16lmc028
+                          Ex.no :1
+                          Date  :05/07/2017
+                          title :Exercise using Swing - JFrame
+*********************************************************************************************************************************/
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+public class ArthimeticOperation 
+{
+
+
+  public static void main(String[] args){
+    
+    ArthimeticOperationLayout arthimeticOperationLayout=new  ArthimeticOperationLayout();
+        arthimeticOperationLayout.setVisible(true); 
+        arthimeticOperationLayout.setSize(400,400);   
+  }
+
+
+}
+
+class ArthimeticOperationLayout extends JFrame implements ActionListener
+{
+
+    private JLabel val1JLabel,val2JLabel,resultLabel;
+    private JTextField val1TextField,val2TextField;
+    private JButton addJButton,minusJButton,multiplyJButton,divideJButton,clearJButton;  
+    
+
+  
+      ArthimeticOperationLayout(){
+        
+        //setting frame
+        setResizable(false); 
+        setTitle("Arthimetic Calculator");
+      
+        JPanel layoutPanel=new JPanel();
+        layoutPanel.setLayout(new GridLayout(5,1));
+        layoutPanel.setPreferredSize(new Dimension(width,height));  
+         
+        
+        //setting Value 1 panel        
+        JPanel val1Container=new JPanel();
+        val1Container.setLayout(new FlowLayout(FlowLayout.LEADING));
+ 
+        val1JLabel=new JLabel("Value 1");
+        val1TextField=new JTextField();
+        val1TextField.setColumns(30);
+        val1Container.add(val1JLabel);
+        val1Container.add(val1TextField);
+        layoutPanel.add(val1Container);  
+        
+        //setting Value 2 panel
+        JPanel val2Container=new JPanel();   
+        val2Container.setLayout(new FlowLayout(FlowLayout.LEADING));
+
+        val2JLabel=new JLabel("Value 2");
+        val2Container.add(val2JLabel);
+        val2TextField=new JTextField();
+        val2TextField.setColumns(30);
+        val2Container.add(val2TextField); 
+        layoutPanel.add(val2Container);
+        
+        //setting Operation buttons panel 
+        JPanel buttonLayoutPanel=new JPanel();         
+        buttonLayoutPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); 
+        JPanel buttonsContainer=new JPanel();   
+        buttonsContainer.setLayout(new FlowLayout(FlowLayout.LEADING));
+        
+        addJButton=new JButton();
+        minusJButton=new JButton();
+        multiplyJButton=new JButton();
+        divideJButton=new JButton();
+        
+       
+        this.setButtonStyle(addJButton,new ImageIcon("ic_shortcut_plus.png"));
+        this.setButtonStyle(minusJButton,new ImageIcon("ic_shortcut_minus.png"));
+        this.setButtonStyle(multiplyJButton,new ImageIcon("ic_shortcut_multiply.png"));
+        this.setButtonStyle(divideJButton,new ImageIcon("ic_shortcut_division.png")); 
+         
+         
+        this.setActionForButton("+",addJButton);
+        this.setActionForButton("-",minusJButton);
+        this.setActionForButton("×",multiplyJButton);
+        this.setActionForButton("÷",divideJButton);
+
+        buttonsContainer.add(addJButton);
+        buttonsContainer.add(minusJButton);
+        buttonsContainer.add(multiplyJButton);
+        buttonsContainer.add(divideJButton); 
+        buttonLayoutPanel.add(buttonsContainer);
+        layoutPanel.add(buttonLayoutPanel);
+         
+       //setting Result Panel
+        JPanel resultContainer=new JPanel();   
+        resultContainer.setLayout(new FlowLayout(FlowLayout.CENTER));
+        
+        resultLabel=new JLabel("0.0");
+        resultContainer.add(resultLabel); 
+        layoutPanel.add(resultContainer); 
+        add(layoutPanel);      
+        //setting Clr Panel
+        JPanel clearContainer=new JPanel();   
+        clearContainer.setLayout(new FlowLayout(FlowLayout.CENTER));
+        
+        clearJButton=new JButton("clr");
+        clearContainer.add(clearJButton); 
+        layoutPanel.add(clearContainer); 
+        add(layoutPanel);      
+        //adding Listener to Clear Button  
+        clearJButton.addActionListener(this);   
+       
+        }
+      public void actionPerformed(ActionEvent buttonAction){
+           
+         try{
+         double val1=Double.parseDouble(val1TextField.getText());
+         double val2=Double.parseDouble(val2TextField.getText());
+         double result=0;
+         switch(buttonAction.getActionCommand())
+         {
+
+            case "+":
+                    result=val1+val2;
+                    resultLabel.setText(String.format("%.5f",result));
+                    break;
+            case "-":
+                    result=val1-val2;
+                    resultLabel.setText(String.format("%.5f",result));
+                    break;
+            case "×":
+                    result=val1*val2;
+                    resultLabel.setText(String.format("%.5f",result));
+                    break;
+            case "÷":
+                    result=val1/val2;
+                    resultLabel.setText(String.format("%.5f",result));
+                    break;
+            default:
+                   this.clear();
+         }        
+          
+
+
+
+         }catch(NumberFormatException exception)
+         {
+            JOptionPane.showMessageDialog(this, "Invalid Input");
+            this.clear();            
+         } 
+            
+
+          
+      }
+
+    public  void clear()
+    {
+
+         val1TextField.setText("");
+         val2TextField.setText("");
+         resultLabel.setText("0.0");  
+    }
+
+   public void setButtonStyle(JButton jbutton,ImageIcon icon) {
+        jbutton.setBackground(null);
+        jbutton.setOpaque(false);
+        jbutton.setBorderPainted(false);
+        jbutton.setPreferredSize(new Dimension(40,40));  
+        jbutton.setIcon(icon);
+        
+    }
+ 
+   public void setActionForButton(String command,JButton jbutton){
+        jbutton.addActionListener(this); 
+        jbutton.setActionCommand(command);
+   } 
+
+} 
+
+
